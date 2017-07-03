@@ -223,7 +223,8 @@ public class PaneManager
                       @Named("Terminal") final WorkbenchTab terminalTab,
                       final MarkersOutputTab markersTab,
                       final FindOutputTab findOutputTab,
-                      OptionsLoader.Shim optionsLoader)
+                      OptionsLoader.Shim optionsLoader,
+                      final PaneManagerProvider paneManagerProvider)
    {
       eventBus_ = eventBus;
       session_ = session;
@@ -250,6 +251,7 @@ public class PaneManager
       markersTab_ = markersTab;
       terminalTab_ = terminalTab;
       optionsLoader_ = optionsLoader;
+      paneManagerProvider.attachTo(this);
       
       binder.bind(commands, this);
       
@@ -530,6 +532,21 @@ public class PaneManager
    public void onPaneLayout()
    {
       optionsLoader_.showOptions(PaneLayoutPreferencesPane.class);
+   }
+   
+   public boolean isZoomed()
+   {
+      return maximizedWindow_ != null;
+   }
+   
+   public LogicalWindow getZoomedWindow()
+   {
+      return maximizedWindow_;
+   }
+   
+   public Tab getZoomedTab()
+   {
+      return maximizedTab_;
    }
    
    private <T> boolean equals(T lhs, T rhs)
