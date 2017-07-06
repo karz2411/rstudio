@@ -6174,6 +6174,11 @@ public class TextEditingTarget implements
                public void execute(Integer arg) {
                   docDisplay.setTabSize(arg);
                }}));
+      releaseOnDismiss.add(prefs.autoDetectIndentation().bind(
+            new CommandWithArg<Boolean>() {
+               public void execute(Boolean arg) {
+                  docDisplay.autoDetectIndentation(arg);
+               }}));
       releaseOnDismiss.add(prefs.showMargin().bind(
             new CommandWithArg<Boolean>() {
                public void execute(Boolean arg) {
